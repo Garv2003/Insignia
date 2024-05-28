@@ -17,6 +17,7 @@ const LogPreview = ({
   padding: number;
   icon: string;
 }) => {
+  console.log(Bgcolor);
   return (
     <div className="flex items-center justify-center w-full h-full">
       <div
@@ -30,7 +31,7 @@ const LogPreview = ({
           className="w-full h-full flex items-center justify-center"
           style={{
             borderRadius: `${rounded}px`,
-            backgroundColor: Bgcolor,
+            background: Bgcolor,
             transform: `rotate(${rotate}deg)`,
           }}
         >

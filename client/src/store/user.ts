@@ -1,0 +1,23 @@
+import { create } from 'zustand'
+
+type User = {
+    id: string
+    name: string
+}
+
+type UserStore = {
+    user: User | null
+    setUser: (user: User) => void
+    logout: () => void
+    isLoggedIn: () => boolean
+}
+
+export const useUserStore = create<UserStore>((
+    set,
+    get
+) => ({
+    user: null,
+    setUser: (user) => set({ user }),
+    logout: () => set({ user: null }),
+    isLoggedIn: () => !!get().user
+}))

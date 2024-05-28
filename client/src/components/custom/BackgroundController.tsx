@@ -46,7 +46,7 @@ const BackgroundController = ({
             BackGround Color
           </label>
           <ColorPickerController
-            hideController={true}
+            hideController={false}
             color={Bgcolor}
             setColor={setBgColor}
           />
