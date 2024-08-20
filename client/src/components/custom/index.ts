@@ -6,6 +6,7 @@ import { default as ColorPickerController } from './ColorPickerController';
 import { default as LogPreview } from './LogPreview';
 import { default as Icon } from './Icon';
 import { default as IconList } from './IconList';
+import { default as GroupButton } from './GroupButton';
 
 export {
     SideNav,
@@ -15,5 +16,6 @@ export {
     ColorPickerController,
     LogPreview,
     Icon,
-    IconList
+    IconList,
+    GroupButton
 };

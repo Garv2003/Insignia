@@ -42,7 +42,7 @@ const BackgroundController = ({
           />
         </div>
         <div className="py-3">
-          <label className="p-2 flex justify-between items-center">
+          <label className="pb-2 flex justify-between items-center">
             BackGround Color
           </label>
           <ColorPickerController

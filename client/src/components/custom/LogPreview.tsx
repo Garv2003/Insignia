@@ -19,7 +19,7 @@ const LogPreview = ({
 }) => {
   console.log(Bgcolor);
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="flex items-center justify-center w-full">
       <div
         className="h-[500px] w-[500px] bg-gray-200 outline-dotted outline-gray-300"
         style={{

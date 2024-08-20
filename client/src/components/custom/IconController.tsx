@@ -26,7 +26,7 @@ const IconController = ({
       <div>
         <IconList icon={icon} setIcon={setIcon} />
         <div className="py-3">
-          <label className="p-2 flex justify-between items-center">
+          <label className="py-2 flex justify-between items-center">
             Size <span>{size}px</span>
           </label>
           <Slider
@@ -48,7 +48,7 @@ const IconController = ({
           />
         </div>
         <div className="py-3">
-          <label className="p-2 flex justify-between items-center">
+          <label className="pb-2 flex justify-between items-center">
             Icon Color
           </label>
           <ColorPickerController

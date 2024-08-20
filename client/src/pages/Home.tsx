@@ -4,14 +4,14 @@ import {
   IconController,
   BackgroundController,
   LogPreview,
-} from "../components/custom";
+  GroupButton,
+} from "@/components/custom";
 import { useState, useEffect } from "react";
-import html2canvas from "html2canvas";
+import * as Tabs from "@radix-ui/react-tabs";
 
 const Home = () => {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
   const [color, setColor] = useState<string>(
-    "rgba(255, 255, 255, 1)" || localStorage.getItem("color")
+    localStorage.getItem("color") || "rgba(255, 255, 255, 1)"
   );
   const [size, setSize] = useState<number>(
     parseInt(localStorage.getItem("size") || "280")
@@ -44,54 +44,63 @@ const Home = () => {
     localStorage.setItem("icon", icon);
   }, [color, size, rotate, rounded, padding, Bgcolor, icon]);
 
-  const downloadPngLogo = () => {
-    const downloadLogoDiv = document.getElementById("downloadLogo");
-    if (downloadLogoDiv) {
-      html2canvas(downloadLogoDiv, {
-        backgroundColor: null,
-      }).then((canvas) => {
-        const link = document.createElement("a");
-        link.download = "logo.png";
-        link.href = canvas
-          .toDataURL("image/png")
-          .replace("image/png", "image/octet-stream");
-        link.click();
-      });
-    }
-  };
-
   return (
-    <div className="overflow-hidden h-screen bg-gray-100 relative">
-      <Header downloadPngLogo={downloadPngLogo} />
-      <div className="w-64 fixed">
-        <SideNav activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
+    <div className="relative">
+      <Header />
+      <div className="w-64 fixed pt-2">
+        <SideNav />
       </div>
-      <div className="ml-64 grid grid-cols-1 md:grid-cols-6">
-        <div className="md:col-span-2 border h-screen shadow-sm p-5 overflow-auto">
-          {activeIndex === 0 && (
-            <IconController
-              color={color}
-              setColor={setColor}
-              size={size}
-              setSize={setSize}
-              rotate={rotate}
-              setRotate={setRotate}
-              icon={icon}
-              setIcon={setIcon}
-            />
-          )}
-          {activeIndex === 1 && (
-            <BackgroundController
-              rounded={rounded}
-              padding={padding}
-              Bgcolor={Bgcolor}
-              setRounded={setRounded}
-              setPadding={setPadding}
-              setBgColor={setBgColor}
-            />
-          )}
+      <div className="ml-64 grid grid-cols-1 md:grid-cols-6 p-2">
+        <div className="md:col-span-2 border shadow-sm bg-white dark:bg-gray-800 rounded-lg">
+          <Tabs.Root
+            className="flex flex-col w-full shadow-[0_2px_10px] p-1 shadow-blackA2"
+            defaultValue="tab1"
+          >
+            <Tabs.List className="shrink-0 flex border-b border-mauve6">
+              <Tabs.Trigger
+                className="bg-white px-5 h-[45px] flex-1 flex items-center justify-center text-[15px] leading-none text-mauve11 select-none first:rounded-tl-md last:rounded-tr-md hover:text-violet11 data-[state=active]:text-violet11 data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:shadow-current data-[state=active]:focus:relative data-[state=active]:focus:shadow-[0_0_0_2px] data-[state=active]:focus:shadow-black outline-none cursor-default"
+                value="tab1"
+              >
+                Icon
+              </Tabs.Trigger>
+              <Tabs.Trigger
+                className="bg-white px-5 h-[45px] flex-1 flex items-center justify-center text-[15px] leading-none text-mauve11 select-none first:rounded-tl-md last:rounded-tr-md hover:text-violet11 data-[state=active]:text-violet11 data-[state=active]:shadow-[inset_0_-1px_0_0,0_1px_0_0] data-[state=active]:shadow-current data-[state=active]:focus:relative data-[state=active]:focus:shadow-[0_0_0_2px] data-[state=active]:focus:shadow-black outline-none cursor-default"
+                value="tab2"
+              >
+                Background
+              </Tabs.Trigger>
+            </Tabs.List>
+            <Tabs.Content
+              className="grow p-5 bg-white rounded-b-md outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
+              value="tab1"
+            >
+              <IconController
+                color={color}
+                setColor={setColor}
+                size={size}
+                setSize={setSize}
+                rotate={rotate}
+                setRotate={setRotate}
+                icon={icon}
+                setIcon={setIcon}
+              />
+            </Tabs.Content>
+            <Tabs.Content
+              className="grow p-5 bg-white rounded-b-md outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
+              value="tab2"
+            >
+              <BackgroundController
+                rounded={rounded}
+                padding={padding}
+                Bgcolor={Bgcolor}
+                setRounded={setRounded}
+                setPadding={setPadding}
+                setBgColor={setBgColor}
+              />
+            </Tabs.Content>
+          </Tabs.Root>
         </div>
-        <div className="md:col-span-4 items-center justify-center flex">
+        <div className="md:col-span-4 items-center justify-center flex flex-col border shadow-sm ml-2 rounded-lg">
           <LogPreview
             Bgcolor={Bgcolor}
             rounded={rounded}
@@ -101,6 +110,7 @@ const Home = () => {
             rotate={rotate}
             icon={icon}
           />
+          <GroupButton />
         </div>
       </div>
     </div>

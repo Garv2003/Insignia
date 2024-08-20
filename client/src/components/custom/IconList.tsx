@@ -22,8 +22,11 @@ const IconList = ({
 
   return (
     <div>
-      <div>
-        <label>Icon</label>
+      <div
+          className="px-3 cursor-pointer rounded-md h-[50px] flex items-center gap-2"
+      >
+        <label
+        >Icon</label>
         <div
           className="p-3 cursor-pointer bg-gray-200 rounded-md w-[50px] h-[50px] flex items-center justify-center my-2"
           onClick={() => setIsOpen(true)}
@@ -35,7 +38,7 @@ const IconList = ({
               style={{ width: `${20}px`, height: `${20}px` }}
             />
           ) : (
-            <Icon name={icon} color={"#000"} size={20} />
+            <Icon name={icon} color={"#000"} size={50} />
           )}
         </div>
       </div>

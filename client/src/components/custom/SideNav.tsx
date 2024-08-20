@@ -1,45 +1,35 @@
-import { Image, PencilRuler, Shield } from "lucide-react";
+import { Image, User } from "lucide-react";
 import { JSX } from "react";
-
-const SideNav = ({
-  activeIndex,
-  setActiveIndex,
-}: {
-  activeIndex: number;
-  setActiveIndex: (index: number) => void;
-}): JSX.Element => {
+import {NavLink} from "react-router-dom";
+const SideNav = (): JSX.Element => {
   const menuList = [
     {
       id: 1,
-      name: "Icon",
-      icon: PencilRuler,
-    },
-    {
-      id: 2,
-      name: "Background",
+      name: "Home",
+      href: "/",
       icon: Image,
     },
     {
-      id: 3,
-      name: "Upgrade",
-      icon: Shield,
+      id: 2,
+      name: "Profile",
+        href: "/profile",
+      icon: User,
     },
   ];
 
   return (
     <div className=" border shadow-sm h-screen">
       <div>
-        {menuList.map((menu, index) => (
-          <div
-            onClick={() => setActiveIndex(index)}
+        {menuList.map((menu) => (
+          <NavLink
             key={menu.id}
-            className={`p-4 text-lg hover:bg-blue-100 cursor-pointer flex items-center hover:text-blue-500 ${
-              activeIndex === index ? "bg-blue-100 text-blue-500" : ""
-            }`}
+            to={menu.href}
+            className="p-4 text-lg hover:bg-blue-100 cursor-pointer flex items-center hover:text-blue-500"
+              // activeIndex === index ? "bg-blue-100 text-blue-500" : ""
           >
             <menu.icon size={24} className="mr-2" />
             {menu.name}
-          </div>
+          </NavLink>
         ))}
       </div>
     </div>

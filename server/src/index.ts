@@ -1,77 +1,36 @@
-import { Hono } from 'hono'
+import { Elysia } from "elysia";
 import mongoose from 'mongoose'
-import { graphqlServer } from '@hono/graphql-server'
-import { buildSchema } from 'graphql'
-import { logger } from 'hono/logger'
-import { secureHeaders } from 'hono/secure-headers'
+import { apollo } from '@elysiajs/apollo'
+import { typeDefs } from "./graphql/schema";
+import { resolvers } from "./graphql/resolvers";
+import { context } from "./graphql/context";
+import { cors } from '@elysiajs/cors'
 
-const app = new Hono()
+const app = new Elysia()
 
-app.use(logger())
-app.use(secureHeaders())
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+}))
 
-app.get('/', (c) => {
-  return c.text('Testing Hono Server')
-})
-
-const schema = buildSchema(`
-type Logo {
-  id: ID
-  name: String
-  image: String
-  user_id: ID
-}
-
-type Query {
-  hello: String
-  SaveLogo(input: SaveLogoInput):Logo
-}
-
-input SaveLogoInput {
-  name: String
-  image: String
-}
-`)
+app.get("/", () => "Testing Elysia Server")
 
 app.use(
-  async (ctx, next) => {
-    const token = ctx.req.header('authorization')
-    console.log(token)
-    await next()
-  })
-
-const rootResolver = (ctx) => {
-  return {
-    hello: () => {
-      return 'Hello World'
-    },
-    SaveLogo: async (args) => {
-      console.log(args)
-      const { name, image } = args.input
-      console.log(args)
-      return {
-        id: '1',
-        name,
-        image,
-      }
-    }
-  }
-}
-
-app.use(
-  '/graphql',
-  graphqlServer({
-    schema,
-    rootResolver,
+  apollo({
+    typeDefs,
+    resolvers,
+    context
   })
 )
 
-mongoose.connect('mongodb://localhost:27017/insignia').then(() => {
-  console.log('Connected to MongoDB')
-})
+mongoose.connect(process.env.MONGO_URI || "")
+  .then(() => {
+    console.log('Connected to MongoDB')
+    app.listen(3000);
+    console.log(
+      `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+    );
+  })
   .catch((err) => {
     console.error(err)
   })
-
-export default app
-

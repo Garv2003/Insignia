@@ -10,7 +10,7 @@ const ColorPickerController = ({
   setColor: (color: string) => void;
 }) => {
   return (
-    <div>
+    <>
       <ColorPicker
         width={300}
         height={300}
@@ -20,10 +20,9 @@ const ColorPickerController = ({
         hideAdvancedSliders
         hideColorGuide
         hideInputType
-        className="mb-20"
         onChange={(color) => setColor(color)}
       />
-    </div>
+    </>
   );
 };
 
